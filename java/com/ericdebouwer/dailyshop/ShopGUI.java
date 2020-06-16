@@ -44,43 +44,43 @@ public class ShopGUI implements Listener {
 	public void loadInventory(){
 		double bal = plugin.getEconomy().getBalance(this.player);
 		for (int i=0; i<Math.min(plugin.getShopFactory().getMaxInvSize(), storedItems.size()); i++){
-				ItemStack fake = storedItems.get(i).getFake(bal, plugin.getHelper().getCurreny());
-				inv.setItem(i, fake);
+			ItemStack fake = storedItems.get(i).getFake(bal, plugin.getHelper().getCurreny());
+			inv.setItem(i, fake);
 		}
 	}
 	
 	public void openInventory() {
-        player.openInventory(inv);
-    }
+        	player.openInventory(inv);
+    	}
 	
 	@EventHandler
-    public void onInventoryClick(final InventoryClickEvent e) {
-        if (e.getInventory() != inv) return;
-        e.setCancelled(true);
-        if (e.getClickedInventory() != inv) return;
-        if (e.getCurrentItem() == null) return;
-        ShopItem clickItem = storedItems.get(e.getRawSlot());
-        double balance = plugin.getEconomy().getBalance(player);
-        if (balance < clickItem.getPrice()){
-        	plugin.getHelper().sendMessage(Message.NO_MONEY, player, ImmutableMap.of("currency", plugin.getHelper().getCurreny(), "money", Double.toString(balance)));
-        	return;
-        }
-        EconomyResponse resp = plugin.getEconomy().withdrawPlayer(player, clickItem.getPrice());
-        if(resp.transactionSuccess()) {
-        	player.getInventory().addItem(clickItem.getItem());
-        	plugin.getHelper().sendMessage(Message.ITEM_BOUGHT, player, ImmutableMap.of("currency", plugin.getHelper().getCurreny(), "money", Double.toString(resp.balance)));
-        	this.loadInventory();
-        }
-        else {
-        	plugin.getHelper().sendMessage(Message.ERROR, player, null);
-        }
+    	public void onInventoryClick(final InventoryClickEvent e) {
+        	if (e.getInventory() != inv) return;
+        	e.setCancelled(true);
+        	if (e.getClickedInventory() != inv) return;
+        	if (e.getCurrentItem() == null) return;
+        	ShopItem clickItem = storedItems.get(e.getRawSlot());
+        	double balance = plugin.getEconomy().getBalance(player);
+        	if (balance < clickItem.getPrice()){
+        		plugin.getHelper().sendMessage(Message.NO_MONEY, player, ImmutableMap.of("currency", plugin.getHelper().getCurreny(), "money", Double.toString(balance)));
+        		return;
+		}
+        	EconomyResponse resp = plugin.getEconomy().withdrawPlayer(player, clickItem.getPrice());
+        	if(resp.transactionSuccess()) {
+        		player.getInventory().addItem(clickItem.getItem());
+        		plugin.getHelper().sendMessage(Message.ITEM_BOUGHT, player, ImmutableMap.of("currency", plugin.getHelper().getCurreny(), "money", Double.toString(resp.balance)));
+        		this.loadInventory();
+        	}
+        	else {
+        		plugin.getHelper().sendMessage(Message.ERROR, player, null);
+        	}
         
-    }
+    	}
 	
 	@EventHandler
-    public void onInventoryDrag(final InventoryDragEvent e) {
-        if (e.getInventory() == inv) {
-          e.setCancelled(true);
-        }
-    }
+    	public void onInventoryDrag(final InventoryDragEvent e) {
+        	if (e.getInventory() == inv) {
+          		e.setCancelled(true);
+        	}
+    	}
 }

@@ -1,0 +1,64 @@
+ # The config of the DailyShop plugin
+ # Created by 3ricL, minecraft name: Ericdebouwer
+ ###################################################################
+ # Edit this configuration with care, and NEVER use tabs!
+ # If this configuration breaks, my plugin will try to explain what should be changed/fixed
+ # to reset it, simply remove it from the "DailyShop" folder and it will generate a new one
+ #
+ # You can pas arguments between curly braces,
+ # so {shop_name} is replaced with the actual shop's name for example
+ # arguments will be listed in comment above if they can be used
+ # Not including the argument will work just fine, but might be less helpful to users
+ # You can use color codes by using the §-symbol, as seen on: https://www.digminecraft.com/lists/color_list_pc.php
+ ###################################################################
+
+# DO NOT CHANGE
+version: 1.0 
+
+# Replace with empty string ("") to disable
+plugin-prefix: "§7<<§bDaily§9Shop§7>>§r "
+
+currency-symbol: '$'
+
+# the change an item from a shop will actually appear today (number between 0 and 1)
+item-to-shop-chance: 0.5
+
+messages:
+   # ----- messages send to users WITHOUT using a command -----
+   #
+   # {currency} will be replaced with your chosen currency symbol, {money} with the player's current balance
+   no-money: "§cYou don't have enough money! You have: {currency}{money}"
+   # {currency} will be replaced with your chosen currency symbol, {money} with the player's balance after the purchase
+   item-bought: "§2Have fun with your purchase! New balance: {currency}{money}"
+   # Shown when Vault transaction was unsuccessful
+   error: "§cSomething went wrong, please try again!"
+
+   # ----- messages when using the user version of the command -----
+   #
+   shop-not-found: "§7This shop does not exist!"
+   no-allowed-shops: "§7Didn't find a shop for you!"
+   no-shop-permission: "§cYou are not allowed to open this shop!"
+
+   # ----- only admin command messages below -----
+   #
+   no-admin: "§c§lSorry§r§7, you are not allowed to do that!" 
+   # {input} will be replaced with either '/dsa', '/ds admin' or '/dailyshop admin' depending on which was used
+   usage-message: "§cPlease choose an option and a name like: §7{input} <create | remove | view | additem> inventory_name"
+   name-too-long: "§cNames can be 12 characters long at max!"
+   created: "§aInventory {shop_name} created!"
+   already-exists: "§cInventory '{shop_name}' already exists! §7try editing or removing it!"
+   removed: "§aInventory {shop_name} removed!"
+   not-exist: "§7Inventory '{shop_name}' doesn't exist!"
+   no-price: "§7Please also provide a price for the new ItemStack"
+   invalid-price: "§7Price should be a §lpositive §r§7integer"
+   empty-hand: "§7Take the item you want to add in your hand"
+   # {currency} will be replaced with your chosen currency symbol, {price} with the price entered
+   added-item: "§aAdded item to '{shop_name}' for {currency}{price}"
+   full-shop: "§cThis shop is full, double click an item in the Admin GUI to remove it!"
+   item-remove-hint: "§7Left mouse double click item to remove!"
+   
+   
+   
+
+
+

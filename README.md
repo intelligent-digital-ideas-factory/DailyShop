@@ -1,0 +1,2 @@
+# DailyShop
+DailyShop spigot plugin

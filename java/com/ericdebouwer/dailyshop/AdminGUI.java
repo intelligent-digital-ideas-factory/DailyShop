@@ -28,8 +28,8 @@ public class AdminGUI implements Listener{
 		storedItems = plugin.getShopFactory().getAllItems(shopTitle);
 		if (storedItems != null){
 			for (int i=0; i<Math.min(plugin.getShopFactory().getMaxInvSize(), storedItems.size()); i++){
-					ItemStack fake = storedItems.get(i).getFake(Double.MAX_VALUE, plugin.getHelper().getCurreny());
-					inv.setItem(i, fake);
+				ItemStack fake = storedItems.get(i).getFake(Double.MAX_VALUE, plugin.getHelper().getCurreny());
+				inv.setItem(i, fake);
 			}
 		}
 	}
@@ -38,8 +38,8 @@ public class AdminGUI implements Listener{
 	
 	public void openInventory(final Player ent) {
 		plugin.getHelper().sendMessage(Message.ITEM_REMOVE_HINT, ent, null);
-        ent.openInventory(inv);
-    }
+       		ent.openInventory(inv);
+    	}
 	
 	@EventHandler
 	public void noDragging(InventoryDragEvent e){

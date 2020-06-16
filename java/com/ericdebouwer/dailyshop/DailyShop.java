@@ -16,7 +16,7 @@ public class DailyShop extends JavaPlugin{
 	ConfigHelper config;
 	
 	static {
-	    ConfigurationSerialization.registerClass(ShopItem.class);
+		ConfigurationSerialization.registerClass(ShopItem.class);
 	}
 	
 	@Override
@@ -33,24 +33,24 @@ public class DailyShop extends JavaPlugin{
 		
 		if (!setupEconomy()) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + this.logPrefix + "Disabled due to no Vault dependency found!");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
+            		getServer().getPluginManager().disablePlugin(this);
+            		return;
+        	}
 		new ShopCommands(this);
 		new CommandCompleter(this);
 	}
 	
 	private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        economy = rsp.getProvider();
-        return economy != null;
-    }
+        	if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            		return false;
+        	}
+        	RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        	if (rsp == null) {
+            		return false;
+        	}
+        	economy = rsp.getProvider();
+        	return economy != null;
+    	}
 	
 	public Economy getEconomy(){
 		return economy;

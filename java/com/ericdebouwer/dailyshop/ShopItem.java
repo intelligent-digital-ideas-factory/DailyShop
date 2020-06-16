@@ -49,15 +49,15 @@ public class ShopItem implements ConfigurationSerializable {
 	}
 	
 	@Override
-    public Map<String, Object> serialize() {
-        Map<String, Object> serialized = new HashMap<>();
-        serialized.put(ITEM_KEY, item);
-        serialized.put(PRICE_KEY, price);
-        return serialized;
-    }
+    	public Map<String, Object> serialize() {
+        	Map<String, Object> serialized = new HashMap<>();
+        	serialized.put(ITEM_KEY, item);
+        	serialized.put(PRICE_KEY, price);
+        	return serialized;
+   	}
 
-    public static ShopItem deserialize(Map<String, Object> deserialize) {
+    	public static ShopItem deserialize(Map<String, Object> deserialize) {
 		ItemStack item = (ItemStack) deserialize.get(ITEM_KEY);
-        return new ShopItem(item, NumberConversions.toInt(deserialize.get(PRICE_KEY)));
-    }
+        	return new ShopItem(item, NumberConversions.toInt(deserialize.get(PRICE_KEY)));
+    	}
 }

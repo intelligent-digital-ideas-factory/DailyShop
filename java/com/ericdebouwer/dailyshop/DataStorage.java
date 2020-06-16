@@ -64,19 +64,19 @@ public class DataStorage {
 		return null;
 	}
 	
-	 private void createConfig() {
-        shopFile = new File(plugin.getDataFolder(), "shops.yml");
-        if (!shopFile.exists()) {
-            shopFile.getParentFile().mkdirs();
-            plugin.saveResource("shops.yml", false);
-         }
+	private void createConfig() {
+        	shopFile = new File(plugin.getDataFolder(), "shops.yml");
+        	if (!shopFile.exists()) {
+            		shopFile.getParentFile().mkdirs();
+            		plugin.saveResource("shops.yml", false);
+         	}
 
-        shopsConfig = new YamlConfiguration();
-        try {
-            shopsConfig.load(shopFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
+        	shopsConfig = new YamlConfiguration();
+        	try {
+            		shopsConfig.load(shopFile);
+        	} catch (IOException | InvalidConfigurationException e) {
+            		e.printStackTrace();
+        	}
 	}
 	 
 	 public void saveConfig(){

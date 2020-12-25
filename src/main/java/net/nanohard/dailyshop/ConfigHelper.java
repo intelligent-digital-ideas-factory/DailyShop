@@ -1,5 +1,3 @@
-package com.ericdebouwer.dailyshop;
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;

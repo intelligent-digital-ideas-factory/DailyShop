@@ -1,5 +1,3 @@
-package com.ericdebouwer.dailyshop;
-
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;

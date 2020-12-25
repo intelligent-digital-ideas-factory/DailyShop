@@ -1,5 +1,3 @@
-package com.ericdebouwer.dailyshop;
-
 import java.util.ArrayList;
 
 import net.milkbowl.vault.economy.EconomyResponse;

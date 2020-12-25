@@ -1,5 +1,3 @@
-package com.ericdebouwer.dailyshop;
-
 import java.util.HashMap;
 import java.util.Map;
 

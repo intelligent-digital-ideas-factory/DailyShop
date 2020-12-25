@@ -1,3 +1,5 @@
+package net.nanohard.dailyshop;
+
 import java.util.HashMap;
 import java.util.Map;
 

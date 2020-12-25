@@ -1,3 +1,5 @@
+package net.nanohard.dailyshop;
+
 import java.util.ArrayList;
 
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -7,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
@@ -20,11 +23,13 @@ public class ShopGUI implements Listener {
 	private final Inventory inv;
 	private ArrayList<ShopItem> storedItems;
 	private Player player;
+	private String name;
 	
 
 	public ShopGUI(DailyShop plugin, String shopTitle, Player p){
 		this.plugin = plugin;
 		this.player = p;
+		this.name = shopTitle;
 		
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 		
@@ -32,7 +37,7 @@ public class ShopGUI implements Listener {
 		
 		int itemCount = (storedItems.size() > 0) ? storedItems.size() : 9;
 		int size = (int) Math.min(plugin.getShopFactory().getMaxInvSize(), Math.max(Math.ceil(itemCount / 9.0) * 9, 9));
-		String title = ChatColor.AQUA + "" + ChatColor.BOLD + "DailyShop! " + ChatColor.RESET + "(" + shopTitle + ")";
+		String title = ChatColor.AQUA + "" + ChatColor.BOLD + "net.nanohard.dailyshop.DailyShop! " + ChatColor.RESET + "(" + shopTitle + ")";
 		inv = Bukkit.createInventory(null, size, title);
 		
 		this.loadInventory();
@@ -66,6 +71,11 @@ public class ShopGUI implements Listener {
         	EconomyResponse resp = plugin.getEconomy().withdrawPlayer(player, clickItem.getPrice());
         	if(resp.transactionSuccess()) {
         		player.getInventory().addItem(clickItem.getItem());
+        		// Delete item from shop.
+				inv.setItem(e.getRawSlot(), null);
+				storedItems.remove(e.getRawSlot());
+				plugin.getShopFactory().resetItems(name, storedItems);
+
         		plugin.getHelper().sendMessage(Message.ITEM_BOUGHT, player, ImmutableMap.of("currency", plugin.getHelper().getCurreny(), "money", Double.toString(resp.balance)));
         		this.loadInventory();
         	}

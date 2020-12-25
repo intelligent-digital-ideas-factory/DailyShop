@@ -1,3 +1,5 @@
+package net.nanohard.dailyshop;
+
 import java.util.List;
 
 import org.bukkit.Bukkit;

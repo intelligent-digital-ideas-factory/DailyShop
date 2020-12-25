@@ -1,7 +1,7 @@
-name: DailyShop
+name: net.nanohard.dailyshop.DailyShop
 author: EricL (Ericdebouwer)
-main: com.ericdebouwer.dailyshop.DailyShop
-api-version: 1.13
+main: net.nanohard.dailyshop.DailyShop
+api-version: 1.16
 version: 1.0
 description: Customizable shop with daily items!
 depend: [Vault]

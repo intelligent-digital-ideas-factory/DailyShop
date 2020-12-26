@@ -9,7 +9,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
@@ -21,9 +20,9 @@ public class ShopGUI implements Listener {
 	
 	DailyShop plugin;
 	private final Inventory inv;
-	private ArrayList<ShopItem> storedItems;
-	private Player player;
-	private String name;
+	private final ArrayList<ShopItem> storedItems;
+	private final Player player;
+	private final String name;
 	
 
 	public ShopGUI(DailyShop plugin, String shopTitle, Player p){
@@ -37,17 +36,16 @@ public class ShopGUI implements Listener {
 		
 		int itemCount = (storedItems.size() > 0) ? storedItems.size() : 9;
 		int size = (int) Math.min(plugin.getShopFactory().getMaxInvSize(), Math.max(Math.ceil(itemCount / 9.0) * 9, 9));
-		String title = ChatColor.AQUA + "" + ChatColor.BOLD + "net.nanohard.dailyshop.DailyShop! " + ChatColor.RESET + "(" + shopTitle + ")";
+		String title = ChatColor.AQUA + "" + ChatColor.BOLD + "DailyShop!";
 		inv = Bukkit.createInventory(null, size, title);
 		
 		this.loadInventory();
-		
 	}
 	
 	public void loadInventory(){
 		double bal = plugin.getEconomy().getBalance(this.player);
 		for (int i=0; i<Math.min(plugin.getShopFactory().getMaxInvSize(), storedItems.size()); i++){
-			ItemStack fake = storedItems.get(i).getFake(bal, plugin.getHelper().getCurreny());
+			ItemStack fake = storedItems.get(i).getFake(bal, plugin.getHelper().getCurrency());
 			inv.setItem(i, fake);
 		}
 	}
@@ -65,7 +63,7 @@ public class ShopGUI implements Listener {
         	ShopItem clickItem = storedItems.get(e.getRawSlot());
         	double balance = plugin.getEconomy().getBalance(player);
         	if (balance < clickItem.getPrice()){
-        		plugin.getHelper().sendMessage(Message.NO_MONEY, player, ImmutableMap.of("currency", plugin.getHelper().getCurreny(), "money", Double.toString(balance)));
+        		plugin.getHelper().sendMessage(Message.NO_MONEY, player, ImmutableMap.of("currency", plugin.getHelper().getCurrency(), "money", Double.toString(balance)));
         		return;
 		}
         	EconomyResponse resp = plugin.getEconomy().withdrawPlayer(player, clickItem.getPrice());
@@ -76,7 +74,7 @@ public class ShopGUI implements Listener {
 				storedItems.remove(e.getRawSlot());
 				plugin.getShopFactory().resetItems(name, storedItems);
 
-        		plugin.getHelper().sendMessage(Message.ITEM_BOUGHT, player, ImmutableMap.of("currency", plugin.getHelper().getCurreny(), "money", Double.toString(resp.balance)));
+        		plugin.getHelper().sendMessage(Message.ITEM_BOUGHT, player, ImmutableMap.of("currency", plugin.getHelper().getCurrency(), "money", Double.toString(resp.balance)));
         		this.loadInventory();
         	}
         	else {

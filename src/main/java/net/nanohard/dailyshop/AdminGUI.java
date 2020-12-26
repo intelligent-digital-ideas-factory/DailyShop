@@ -16,8 +16,8 @@ public class AdminGUI implements Listener{
 
 	DailyShop plugin;
 	private final Inventory inv;
-	private List<ShopItem> storedItems;
-	private String name;
+	private final List<ShopItem> storedItems;
+	private final String name;
 	
 	public AdminGUI(DailyShop plugin, String shopTitle){
 		this.plugin = plugin;
@@ -28,7 +28,7 @@ public class AdminGUI implements Listener{
 		storedItems = plugin.getShopFactory().getAllItems(shopTitle);
 		if (storedItems != null){
 			for (int i=0; i<Math.min(plugin.getShopFactory().getMaxInvSize(), storedItems.size()); i++){
-				ItemStack fake = storedItems.get(i).getFake(Double.MAX_VALUE, plugin.getHelper().getCurreny());
+				ItemStack fake = storedItems.get(i).getFake(Double.MAX_VALUE, plugin.getHelper().getCurrency());
 				inv.setItem(i, fake);
 			}
 		}

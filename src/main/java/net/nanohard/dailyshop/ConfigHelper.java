@@ -33,21 +33,18 @@ public class ConfigHelper {
 	DailyShop plugin;
 	boolean functional;
 	private String pluginPrefix;
-	private String curreny;
-	private double itemToShopChance;
-	
-	private final String MESSAGE_KEY = "messages.";
-	
-	
+	private String currency;
+
+
 	public ConfigHelper(DailyShop plugin){
 		this.plugin = plugin;
 		plugin.saveDefaultConfig();
-		this.functional = this.validateSection("", "", true);
+		this.functional = this.validateSection();
 		
 		if (functional){
 			this.pluginPrefix = plugin.getConfig().getString("plugin-prefix");
-			this.curreny = plugin.getConfig().getString("currency-symbol");
-			this.itemToShopChance = plugin.getConfig().getDouble("item-to-shop-chance");
+			this.currency = plugin.getConfig().getString("currency-symbol");
+//			double itemToShopChance = plugin.getConfig().getDouble("item-to-shop-chance");
 		}
 	}
 	
@@ -55,15 +52,16 @@ public class ConfigHelper {
 		return this.functional;
 	}
 	
-	public String getCurreny(){
-		return curreny;
+	public String getCurrency(){
+		return currency;
 	}
 	
-	public double getItemChange(){
-		return itemToShopChance;
-	}
+//	public double getItemChange(){
+//		return itemToShopChance;
+//	}
 	
 	public void sendMessage(Message message, Player player, ImmutableMap<String, String> replacements){
+		String MESSAGE_KEY = "messages.";
 		String msg = plugin.getConfig().getString(MESSAGE_KEY + message.toString());
 		if (msg == null || msg.isEmpty()) return;
 		String colorMsg = ChatColor.translateAlternateColorCodes('§', this.pluginPrefix + msg);
@@ -75,17 +73,17 @@ public class ConfigHelper {
 		player.sendMessage(colorMsg);		
 	}
 
-	private boolean validateSection(String template_path, String real_path, boolean deep){
+	private boolean validateSection(){
 		InputStream templateFile = getClass().getClassLoader().getResourceAsStream("config.yml");
         	FileConfiguration templateConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(templateFile));
         
-        	ConfigurationSection real_section = plugin.getConfig().getConfigurationSection(real_path);
-       		ConfigurationSection template_section = templateConfig.getConfigurationSection(template_path);
+        	ConfigurationSection real_section = plugin.getConfig().getConfigurationSection("");
+       		ConfigurationSection template_section = templateConfig.getConfigurationSection("");
         
         	if (real_section == null || template_section == null) return false;
         
- 		for(String key: template_section.getKeys(deep)){
- 			if (!real_section.getKeys(deep).contains(key) || template_section.get(key).getClass() != real_section.get(key).getClass()){
+ 		for(String key: template_section.getKeys(true)){
+ 			if (!real_section.getKeys(true).contains(key) || template_section.get(key).getClass() != real_section.get(key).getClass()){
  				Bukkit.getLogger().log(Level.WARNING, plugin.logPrefix + "Missing or invalid datatype key '" + key + "' and possibly others in config.yml");
  				return false;
  			}

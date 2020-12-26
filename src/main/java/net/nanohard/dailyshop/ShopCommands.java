@@ -113,7 +113,7 @@ public class ShopCommands implements CommandExecutor{
 					ItemStack handCopy = new ItemStack(player.getInventory().getItemInMainHand());
 					ShopItem newItem = new ShopItem(handCopy, price);
 					if (plugin.getShopFactory().addItem(args.get(1), newItem)){
-						plugin.getHelper().sendMessage(Message.ADDED_ITEM, player, ImmutableMap.of("shop_name", args.get(1), "currency", plugin.getHelper().getCurreny(), "price", args.get(2)));
+						plugin.getHelper().sendMessage(Message.ADDED_ITEM, player, ImmutableMap.of("shop_name", args.get(1), "currency", plugin.getHelper().getCurrency(), "price", args.get(2)));
 					}
 					else {
 						plugin.getHelper().sendMessage(Message.FULL_SHOP, player, null);

@@ -1,20 +1,18 @@
 package net.nanohard.dailyshop;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-
 public class ShopFactory {
 
 	DailyShop plugin;
-	private DataStorage dataHandler;
-	
-	private final long SECONDS_PER_DAY = 86400000L;
+	private final DataStorage dataHandler;
 	private final String PERMISSION_KEY = "dailyshop.shop.";
 	private final int MAX_NAME_SIZE = 12;
 	
@@ -80,16 +78,27 @@ public class ShopFactory {
 	}
 	
 	public ArrayList<ShopItem> getDailyItems(String shopName){
+		ArrayList<ShopItem> fullList = this.getAllItems(shopName);
+		if (fullList == null) return null;
+
+		long SECONDS_PER_DAY = 1200000L;  // minecraft day == 1200 seconds == 20 minutes
 		int seed = (int) (new Date().getTime()/SECONDS_PER_DAY);
 		Random rand = new Random(seed);
-		ArrayList<ShopItem> result = new ArrayList<ShopItem>();
-		if (this.getAllItems(shopName) == null) return result; 
-		for (ShopItem item: this.getAllItems(shopName)){
-			if (rand.nextDouble() < plugin.getHelper().getItemChange()){
-				result.add(item);
-			}
+
+		ArrayList<ShopItem> dailyList = new ArrayList<ShopItem>();
+		int numberOfElements = 9;
+		if (fullList.size() < numberOfElements) {
+			numberOfElements = fullList.size();
 		}
-		return result;
+
+		for (int i = 0; i < numberOfElements; i++) {
+			int randomIndex = rand.nextInt(fullList.size());
+			ShopItem randomElement = fullList.get(randomIndex);
+			dailyList.add(randomElement);
+			fullList.remove(randomIndex);
+		}
+
+		return dailyList;
 	}
 	
 	public int getMaxInvSize(){
